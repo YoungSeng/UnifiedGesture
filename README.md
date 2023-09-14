@@ -56,7 +56,7 @@ python sample.py --config=./configs/all_data.yml --gpu 0 --save_dir='./result_qu
 
 Optional:
 * If you want to use your own audio, please directly change the path of `--audio_path` to your own audio path such as `--audio_path='../dataset/Trinity/audio/Recording_006.wav'`
-* You can refer to Line to generate all the files rather than only one file.
+* You can refer to `generate_result()` in `sample.py` to generate all the files rather than only one file.
 
 You will get the generated motion in `./diffusion_latent/result_quick_start/Trinity/` folder with the name `xxx_recon.npy`, `xxx_code.npy` and `xxx.npy`.
 
@@ -78,6 +78,10 @@ The results are shown below, try the output with different skeletons.
 
 
 
+https://github.com/YoungSeng/UnifiedGesture/assets/37477030/a34d721a-3306-434a-9c44-de2af1701705
+
+
+
 Finally the problem of foot sliding can be partially dealt with using inverse kinematics.
 
 ```gitignore
@@ -86,7 +90,11 @@ python process_bvh.py --step IK --source_path "../../result/inference/Trinity/" 
 ```
 
 You will get `005_Neutral_4_x_1_0_minibatch_1080_[0, 0, 0, 0, 0, 3, 0]_123456_recon_fix.bvh` in the folder same as before.
-The results are shown below, and you can try to modify the threshold for foot contact speed to strike a balance between foot sliding and smoothness.
+The results are shown below, orange indicates the result of IK optimization performed on the lower body. And you can try to modify the threshold for foot contact speed to strike a balance between foot sliding and smoothness.
+
+
+
+https://github.com/YoungSeng/UnifiedGesture/assets/37477030/0cc625e2-d049-465d-9aa7-c539528ea53a
 
 
 
