@@ -1,0 +1,20 @@
+
+# latent space
+train_data_path: "./dataset/lmdb_code_3/lmdb_train"
+val_data_path: "./dataset/lmdb_code_3/lmdb_test"
+
+n_poses: 15
+motion_resampling_framerate: 3.75
+subdivision_stride: 3
+batch_size: 128
+loader_workers: 2
+epochs: 500     # 500 -> 10
+save_per_epochs: 50     # 20 -> 1
+model_save_path: "./result/GPT_GRU_block_size_again"
+name: "XTransformer"
+
+betas: [0.5, 0.999]
+milestones: [100, 200]
+gamma: 0.1
+
+
