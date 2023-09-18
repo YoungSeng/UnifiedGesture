@@ -68,17 +68,6 @@ def make_lmdb_latent_dataset(base_path):
         else:
             dataset_idx = 0  # train
 
-        # word preprocessing
-        # word_list = []
-        # for wi in range(len(subtitle)):
-        #     word_s = float(subtitle[wi]['start_time'][:-1])
-        #     word_e = float(subtitle[wi]['end_time'][:-1])
-        #     word = subtitle[wi]['word']
-        #
-        #     word = normalize_string(word)
-        #     if len(word) > 0:
-        #         word_list.append([word, word_s, word_e])
-
         # save subtitles and skeletons
         # poses = np.asarray(poses)       # x dtype=np.float16
         clips[dataset_idx]['clips'].append(
@@ -115,9 +104,7 @@ def make_lmdb_latent_dataset(base_path):
 
 
 if __name__ == '__main__':
-    '''
-    python ./datasets/latent_to_lmdb.py --base_path ./datasets/bvh2upper_lower_root
-    '''
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--base_path", type=Path)
     args = parser.parse_args()

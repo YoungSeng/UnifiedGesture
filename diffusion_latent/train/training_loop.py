@@ -65,7 +65,6 @@ class TrainLoop:
         )
 
         self.save_dir = args.save_dir
-        self.overwrite = args.overwrite
 
         self.device = device
         if args.audio_feat == "wav encoder":

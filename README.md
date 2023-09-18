@@ -36,7 +36,7 @@ pip install -r requirements.txt
 
 ## 2. Quick start
 
-Download files such as pre-trained models from [Google Drive](TBA) or [Baidu Netdisk](TBA).
+Download files such as pre-trained models from [Google Drive](https://drive.google.com/drive/folders/1iU1-n3da7AXtNzotqtA8A5lYyofmAtpi?usp=sharing) or [Baidu Netdisk](https://pan.baidu.com/s/1CpoIcScmwLyfDpYUBJ-GHQ?pwd=g7g9).
 
 Put the pre-trained models and data:
 
@@ -100,24 +100,85 @@ https://github.com/YoungSeng/UnifiedGesture/assets/37477030/0cc625e2-d049-465d-9
 
 ## 3. Train your own model
 
-TBA
+Here we only use a small amount of data for illustration, please get all the data from [Trinity](https://trinityspeechgesture.scss.tcd.ie/) and [ZEGGS](https://github.com/ubisoft/ubisoft-laforge-ZeroEGGS).
 
 ### 3.1 Data preparation
 
+Place the data from step 2 in the corresponding folder.
 
-
+```gitignore
+python process_bvh.py --step Trinity --source_path "../../dataset/Trinity/" --save_path "./Trinity_ZEGGS/Trinity/"
+python process_bvh.py --step ZEGGS --source_path "../../dataset/ZEGGS/clean/" --save_path "./Trinity_ZEGGS/ZEGGS/"
+python process_bvh.py --step foot_contact --source_path "./Trinity_ZEGGS/Trinity/" --save_path "./Trinity_ZEGGS/Trinity_aux/"
+python process_bvh.py --step foot_contact --source_path "./Trinity_ZEGGS/ZEGGS/" --save_path "./Trinity_ZEGGS/ZEGGS_aux/"
+cd ../../codebook
+python process_root_vel.py
+cd ..
+python process_audio.py
+```
 
 ### 3.2 Training retargeting network
+
+Change `dataset_name = Mixamo_new_2` in the `L7` of file `./retargeting/option_parser.py` to `dataset_name = 'Trinity_ZEGGS'`
+
+```gitignore
+cd ./retargeting/
+python datasets/preprocess.py
+python train.py --save_dir=./my_model/ --cuda_device 'cuda:0'
+```
+
+The model will be saved in: `./my_model/models/`
+
+(Optional: change the epoch of `model.load(epoch=16000)` in line `L73` of the `./eval_single_pair.py` file to what you need.)
+
+```gitignore
+python demo.py --mode bvh2latent --save_dir ./my_model/
+```
+
+You will get latent result of the retargeting in the dataset `./datasets/Trinity_ZEGGS/bvh2upper_lower_root/`.
 
 
 ### 3.4 Training diffusion model
 
+```gitignore
+cd ../retargeting/
+python ./datasets/latent_to_lmdb.py --base_path ./datasets/Trinity_ZEGGS/bvh2upper_lower_root
+cd ../codebook
+python VisualizeCodebook.py --config=./configs/codebook.yml --train --gpu 0
+cd ..
+python process_code.py
+python ./make_lmdb.py --base_path ./dataset/
+```
+
+```gitignore
+cd ./diffusion_latent
+python end2end.py --config=./configs/all_data.yml --gpu 1 --save_dir "./result/my_diffusion"
+```
+
+The trained diffusion model will be saved in: `./result/my_diffusion/`
 
 ### 3.5 Refinement
 
 #### 3.5.1 Training VQVAE model
 
+
+
+You will get the lmdb file in the `./datasets/Trinity_ZEGGS/bvh2upper_lower_root/lmdb_latent_vel/` folder.
+
+```gitignore
+cd ../codebook
+python train.py --config=./configs/codebook.yml --train --gpu 0
+```
+
+The trained model is saved in: `./result/my_codebook/`
+
 #### 3.5.2 RL training
+
+TBA
+
+### More
+* If the `data.mbd` file is too small (8KB), check for issues generating the lmdb file.
+* You can modify the code yourself to use [BEAT](https://github.com/PantoMatrix/BEAT), [TWH](https://github.com/facebookresearch/TalkingWithHands32M), etc. This will not be demonstrated here.
 
 ### Acknowledgments
 

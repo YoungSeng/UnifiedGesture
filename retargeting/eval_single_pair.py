@@ -70,7 +70,7 @@ def demo_model(input_bvh, target_bvh, test_type, output_filename):
 
     dataset = create_dataset(args, character_names)
     model = create_model(args, character_names, dataset)
-    model.load(epoch=16000)     # my_model_new_3 + Mixamo_new_2
+    model.load(epoch=9600)     # my_model_new_3 + Mixamo_new_2
     return model
 
 

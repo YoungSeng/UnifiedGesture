@@ -29,7 +29,7 @@ def wavlm_init(device='cuda:2'):
 def wav2wavlm(model, wav_input_16khz, device='cuda:2'):
     with torch.no_grad():
         device = torch.device(device)
-        print(wav_input_16khz.shape)
+        # print(wav_input_16khz.shape)
         wav_input_16khz = torch.from_numpy(wav_input_16khz).to(device)
         # wav_input_16khz = wav_input_16khz.to(device).unsqueeze(0)
         rep = model.extract_features(wav_input_16khz)[0]

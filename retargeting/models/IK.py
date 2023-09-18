@@ -61,8 +61,8 @@ def get_foot_vel_position(file_name, ref_height):
 
 
 def get_ee_id_by_names(joint_names):
-    # ees = ['RightToeBase', 'LeftToeBase', 'LeftFoot', 'RightFoot']
-    ees = ['RightToeBase', 'LeftToeBase', 'LeftToeBaseEnd', 'RightToeBaseEnd']
+    ees = ['RightToeBase', 'LeftToeBase', 'LeftFoot', 'RightFoot']
+    # ees = ['RightToeBase', 'LeftToeBase', 'LeftToeBaseEnd', 'RightToeBaseEnd']
     ee_id = []
     for i, ee in enumerate(ees):
         ee_id.append(joint_names.index(ee))

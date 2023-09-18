@@ -1,17 +1,17 @@
 import os
 import pdb
-
-import numpy as np
 import torchaudio
-from conditional_gpt.encodec import EncodecModel
 from conditional_gpt.encodec.utils import convert_audio
+import numpy as np
 import torch
 
 
-model = EncodecModel.encodec_model_24khz()
-model.set_target_bandwidth(1.5)
-
 def clip_audio(src_audio_path, src_motion_path, save_path, mode):
+
+    from conditional_gpt.encodec import EncodecModel
+    model = EncodecModel.encodec_model_24khz()
+    model.set_target_bandwidth(1.5)
+
     if not os.path.exists(save_path):  # 判断是否存在文件夹如果不存在则创建为文件夹
         os.makedirs(save_path)  # makedirs 创建文件时如果路径不存在会创建这个路径
     if mode == 'ZEGGS':
@@ -82,25 +82,25 @@ if __name__ == '__main__':
     '''
     python process_audio.py
     '''
-    trinity_motion_path = './retargeting/datasets/Mixamo_new_2/Trinity/'
-    zeggs_motion_path = './retargeting/datasets/Mixamo_new_2/ZEGGS/'
-    trinity_audio_path = '../trinity/audio/'
-    zeggs_audio_path = '../ZEGGS/clean/'
-    trinity_audio_clip_path = './dataset/Trinity/audio_clips/'
-    zeggs_audio_clip_path = './dataset/ZEGGS/audio_clips/'
-    # trinity_audio_proceed_path = './dataset/Trinity/all_speech/'
-    # zeggs_audio_proceed_path = './dataset/ZEGGS/all_speech/'
+    trinity_motion_path = './retargeting/datasets/Trinity_ZEGGS/Trinity/'
+    zeggs_motion_path = './retargeting/datasets/Trinity_ZEGGS/ZEGGS/'
+    trinity_audio_path = './dataset/Trinity/audio/'
+    zeggs_audio_path = './dataset/ZEGGS/clean/'
+    # trinity_audio_clip_path = './dataset/Trinity/audio_clips/'
+    # zeggs_audio_clip_path = './dataset/ZEGGS/audio_clips/'
+    trinity_audio_proceed_path = './dataset/Trinity/all_speech/'
+    zeggs_audio_proceed_path = './dataset/ZEGGS/all_speech/'
 
     # 1. clip audio
     # clip_audio(zeggs_audio_path, zeggs_motion_path, zeggs_audio_clip_path, 'ZEGGS')
     # clip_audio(trinity_audio_path, trinity_motion_path, trinity_audio_clip_path, 'Trinity')
 
     # 2. process training audio
-    # process_audio(zeggs_audio_path, zeggs_motion_path, zeggs_audio_proceed_path, 'ZEGGS')
-    # process_audio(trinity_audio_path, trinity_motion_path, trinity_audio_proceed_path, 'Trinity')
+    process_audio(zeggs_audio_path, zeggs_motion_path, zeggs_audio_proceed_path, 'ZEGGS')
+    process_audio(trinity_audio_path, trinity_motion_path, trinity_audio_proceed_path, 'Trinity')
 
     # 3. process valid audio
-    trinity_audio_proceed_path = './dataset/Trinity/valid_speech/'
-    zeggs_audio_proceed_path = './dataset/ZEGGS/valid_speech/'
-    process_audio('../ZEGGS/valid/', zeggs_motion_path, zeggs_audio_proceed_path, 'ZEGGS_valid')
-    process_audio('../trinity/test/', trinity_motion_path, trinity_audio_proceed_path, 'Trinity_valid')
+    # trinity_audio_proceed_path = './dataset/Trinity/valid_speech/'
+    # zeggs_audio_proceed_path = './dataset/ZEGGS/valid_speech/'
+    # process_audio('../ZEGGS/valid/', zeggs_motion_path, zeggs_audio_proceed_path, 'ZEGGS_valid')
+    # process_audio('../trinity/test/', trinity_motion_path, trinity_audio_proceed_path, 'Trinity_valid')

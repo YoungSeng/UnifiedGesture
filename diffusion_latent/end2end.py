@@ -27,7 +27,7 @@ torch.cuda.set_device(int(args.gpu))
 def create_model_and_diffusion(args):
     model = MDM(modeltype='', njoints=16 * 7 * 3 + 27, nfeats=1, translation=True, pose_rep='rot6d', glob=True,
                 glob_rot=True, cond_mode='cross_local_attention3_style1', action_emb='tensor', audio_feat='wavlm',
-                arch='trans_enc', latent_dim=256, n_seed=4, cond_mask_prob=0.1)
+                arch='trans_enc', latent_dim=256, n_seed=args.n_seed, cond_mask_prob=0.1)
     diffusion = create_gaussian_diffusion()
     return model, diffusion
 
@@ -50,8 +50,8 @@ def main(args):
 
     logging.info('len of train loader:{}, len of test loader:{}'.format(len(train_loader), len(test_loader)))
 
-    if not os.path.exists(args.model_save_path):
-        os.mkdir(args.model_save_path)
+    if not os.path.exists(args.save_dir):
+        os.makedirs(args.save_dir)
 
     model, diffusion = create_model_and_diffusion(args)
     model.to(mydevice)
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     '''
     cd /ceph/hdd/yangsc21/Python/My_3/deep-motion-editing/diffusion_latent/
     cd diffusion_latent/
-    python end2end.py --config=./configs/all_data.yml --train --no_cuda 2 --gpu 2
+    python end2end.py --config=./configs/all_data.yml --gpu 1 --save_dir "./result/my_diffusion"
     modelarts:
 cd /nfs7/y50021900/My_2/denoising-diffusion-pytorch-main/mydiffusion/ && pip install --upgrade pip && pip install -r requirements.txt && python end2end.py --config=./configs/codebook.yml --train --no_cuda 0 --gpu 0
 cd /nfs7/y50021900/My_2/mydiffwave && pip install . && cd /nfs7/y50021900/My_2/denoising-diffusion-pytorch-main/mydiffusion/ && pip install --upgrade pip && pip install -r requirements.txt && python end2end.py --config=./configs/codebook.yml --train --no_cuda 0 --gpu 0
@@ -77,5 +77,5 @@ cd /nfs7/y50021900/My_2/mydiffwave && pip install . && cd /nfs7/y50021900/My_2/d
     pprint(config)
 
     config = EasyDict(config)
-
+    config.no_cuda = config.gpu
     main(config)

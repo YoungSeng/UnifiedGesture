@@ -23,19 +23,19 @@ train_data_path: "../dataset/all_lmdb_aux/lmdb_train/"
 val_data_path: "../dataset/all_lmdb_aux/lmdb_test/"
 
 n_poses: 36   # 36
-n_seed: 4   # 4
+n_seed: 6   # 4
 motion_resampling_framerate: 7.5
 subdivision_stride: 3
 batch_size: 256
 loader_workers: 0
 epochs: 500
 save_per_epochs: 50
-model_save_path: "../result/20230423/"
+model_save_path: "./result/20230423/"
 name: "DiffuseStyleGesture"
 log_interval: 500
 weight_decay: 0.0
 lr_anneal_steps: 0
-save_dir: "./result/inference/new_DiffuseStyleGesture_model3_256_seed_4_aux"
+save_dir: "./result/inference/my_diffusion"
 audio_feat: "wavlm"     # wav encoder; mfcc; wavlm
 
 lr: 0.00003     # 0.00003 ->

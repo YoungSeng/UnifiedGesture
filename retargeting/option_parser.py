@@ -4,7 +4,7 @@ pip install tensorboard
 
 '''
 
-dataset_name = 'Mixamo_new_2'       # modify for test
+dataset_name = 'Trinity_ZEGGS'       # modify for re-train
 
 multiple = 1
 
@@ -14,7 +14,7 @@ def get_parser():
     # parser.add_argument('--save_dir', type=str, default='./training', help='directory for all savings')
     # modify for test
     parser.add_argument('--save_dir', type=str, default='./my_model_new_3', help='directory for all savings')
-    parser.add_argument('--cuda_device', type=str, default='cuda:5', help='cuda device number, eg:[cuda:0]')
+    parser.add_argument('--cuda_device', type=str, default='cuda:0', help='cuda device number, eg:[cuda:0]')
 
     parser.add_argument('--num_layers', type=int, default=2, help='number of layers')       # model_5, model_7
     parser.add_argument('--learning_rate', type=float, default=multiple * 2e-4, help='learning rate')
@@ -69,6 +69,7 @@ def get_parser():
     parser.add_argument('--input_file', type=str, default="../diffusion_latent/result_model3_128/Trinity/005_Neutral_4_x_1_0_minibatch_30_[0, 0, 0, 0, 0, 3, 0]_123456_recon.npy")
     parser.add_argument('--ref_path', type=str, default='./datasets/bvh2latent/ZEGGS/065_Speech_0_x_1_0.npy')
     parser.add_argument('--output_path', type=str, default='../result/inference/Trinity/')
+    parser.add_argument('--mode', type=str, default='quick_start')
 
     return parser
 

@@ -190,6 +190,7 @@ class MDM(nn.Module):
         if 'style1' in self.cond_mode:
             embed_style = self.mask_cond(self.embed_style(y['style']), force_mask=force_mask)       # (bs, 64)
             if self.n_seed != 0:
+
                 embed_text = self.embed_text(self.mask_cond(y['seed'].squeeze(2).reshape(bs, -1), force_mask=force_mask))       # (bs, 256-64)
                 emb_1 = torch.cat((embed_style, embed_text), dim=1)
             else:

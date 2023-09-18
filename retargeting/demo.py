@@ -132,15 +132,15 @@ def bvh_input(quaternion, edge):
             writer.write_raw(ans[0], 'xyz', os.path.join(new_path, '0_gt_euler_angle.bvh'))
     
 
-def bvh2latent(Trinity_bvh_path = "./datasets/valid_process/Trinity/", ZEGGS_bvh_path = "./datasets/Mixamo_new_2/ZEGGS/",
-               Trinity_output = './datasets/valid_processed/Trinity', ZEGGS_output = './datasets/new_dataset/ZEGGS'):
+def bvh2latent(Trinity_bvh_path = "./datasets/Trinity_ZEGGS/Trinity/", ZEGGS_bvh_path = "./datasets/Trinity_ZEGGS/ZEGGS/",
+               Trinity_output = './datasets/Trinity_ZEGGS/bvh2upper_lower_root/Trinity', ZEGGS_output = './datasets/Trinity_ZEGGS/bvh2upper_lower_root/ZEGGS'):
 
 
     for i, item in enumerate(os.listdir(Trinity_bvh_path)):
         print(i, item)
         if i == 0:
             from eval_single_pair import demo_model
-            dataset_name = 'valid_process'
+            dataset_name = 'Trinity_ZEGGS'
             src_name = 'Trinity'
             dest_name = 'ZEGGS'
             bvh_name = item
@@ -148,23 +148,23 @@ def bvh2latent(Trinity_bvh_path = "./datasets/valid_process/Trinity/", ZEGGS_bvh
             input_file = './datasets/' + dataset_name + '/{}/{}'.format(src_name, bvh_name)
             ref_file = './datasets/' + dataset_name + '/{}/{}'.format(dest_name, ref_bvh_name)
             model = demo_model(input_file, ref_file, 'cross', Trinity_output)
-        example('valid_process', 'Trinity', 'ZEGGS', item, 'cross', Trinity_output, ref_bvh_name='067_Speech_2_x_1_0.bvh', loaded_model=model)
-        # break
+        example('Trinity_ZEGGS', 'Trinity', 'ZEGGS', item, 'cross', Trinity_output, ref_bvh_name='067_Speech_2_x_1_0.bvh', loaded_model=model)
 
-    # for i, item in enumerate(os.listdir(ZEGGS_bvh_path)):
-    #     print(i, item)
-    #     if i == 0:
-    #         from eval_single_pair import demo_model
-    #         dataset_name = 'Mixamo_new_2'
-    #         src_name = 'ZEGGS'
-    #         dest_name = 'Trinity'
-    #         bvh_name = item
-    #         ref_bvh_name = 'Recording_006.bvh'
-    #         input_file = './datasets/' + dataset_name + '/{}/{}'.format(src_name, bvh_name)
-    #         ref_file = './datasets/' + dataset_name + '/{}/{}'.format(dest_name, ref_bvh_name)
-    #         model = demo_model(input_file, ref_file, 'cross', ZEGGS_output)
-    #     example('Mixamo_new_2', 'ZEGGS', 'Trinity', item, 'cross', ZEGGS_output, ref_bvh_name='Recording_006.bvh', loaded_model=model)
-    #     # break
+
+    for i, item in enumerate(os.listdir(ZEGGS_bvh_path)):
+        print(i, item)
+        if i == 0:
+            from eval_single_pair import demo_model
+            dataset_name = 'Trinity_ZEGGS'
+            src_name = 'ZEGGS'
+            dest_name = 'Trinity'
+            bvh_name = item
+            ref_bvh_name = 'Recording_006.bvh'
+            input_file = './datasets/' + dataset_name + '/{}/{}'.format(src_name, bvh_name)
+            ref_file = './datasets/' + dataset_name + '/{}/{}'.format(dest_name, ref_bvh_name)
+            model = demo_model(input_file, ref_file, 'cross', ZEGGS_output)
+        example('Trinity_ZEGGS', 'ZEGGS', 'Trinity', item, 'cross', ZEGGS_output, ref_bvh_name='Recording_006.bvh', loaded_model=model)
+
 
 '''
 def latent2bvh(mode, item, ref_path, output_path):
@@ -411,15 +411,13 @@ if __name__ == '__main__':
     parser.add_argument('--input_file', type=str, default="../diffusion_latent/result_model3_128/Trinity/005_Neutral_4_x_1_0_minibatch_30_[0, 0, 0, 0, 0, 3, 0]_123456_recon.npy")
     parser.add_argument('--ref_path', type=str, default='./datasets/bvh2latent/ZEGGS/065_Speech_0_x_1_0.npy')
     parser.add_argument('--output_path', type=str, default='../result/inference/Trinity/')
+    parser.add_argument('--mode', type=str, default='quick_start')
+    parser.add_argument('--save_dir', type=str, default='./my_model_new_3', help='directory for all savings')
     config = parser.parse_args()
-
-    # example('Aj', 'BigVegas', 'Dancing Running Man.bvh', 'intra', './examples/intra_structure')
-    # example('BigVegas', 'Mousey_m', 'Dual Weapon Combo.bvh', 'cross', './examples/cross_structure')
-    # example('ch01', 'ch02', 'Hip_Hop_Dancing.bvh', 'cross', './examples_my/cross_structure')
 
     # example('Mixamo_new_2', 'Trinity', 'ZEGGS', 'Recording_006.bvh', 'cross', './examples_my/cross_structure', ref_bvh_name='067_Speech_2_x_1_0.bvh')
     # example('Mixamo_new_2', 'ZEGGS', 'Trinity', '067_Speech_2_x_1_0.bvh', 'cross', './examples_my/cross_structure', ref_bvh_name='Recording_006.bvh')
-    # bvh2latent()
+
 
     # x = np.load("../codebook/result/inference/Trinity/generate_train_codebook.npy")
     # x = x[0].transpose(1, 0).reshape(-1, 28, 4)
@@ -443,23 +441,29 @@ if __name__ == '__main__':
     # generate_result("./datasets/valid_process_2/Trinity/",
     #                 "./datasets/valid_process_2/bvh/")
 
-    # Check if the directory exists
-    if not os.path.exists(config.output_path):
-        os.makedirs(config.output_path)
-        print(f"Directory {config.output_path} created!")
-    else:
-        print(f"Directory {config.output_path} already exists!")
+    if config.mode == 'quick_start':
 
-    latent2bvh(config.target,
-               config.input_file,
-               None,
-               None,
-               # "/ceph/hdd/yangsc21/Python/My_3/deep-motion-editing/retargeting/datasets/valid_processed/Trinity/TestSeq003_lower.npy",
-               #  "/ceph/hdd/yangsc21/Python/My_3/deep-motion-editing/retargeting/datasets/valid_processed/Trinity/TestSeq003_root.npy",
-                ref_path=config.ref_path,
-                output_path=config.output_path,
-                model_name=config.model_name,
-                device=config.cuda_device)
+        # Check if the directory exists
+        if not os.path.exists(config.output_path):
+            os.makedirs(config.output_path)
+            print(f"Directory {config.output_path} created!")
+        else:
+            print(f"Directory {config.output_path} already exists!")
+
+        latent2bvh(config.target,
+                   config.input_file,
+                   None,
+                   None,
+                   # "/ceph/hdd/yangsc21/Python/My_3/deep-motion-editing/retargeting/datasets/valid_processed/Trinity/TestSeq003_lower.npy",
+                   #  "/ceph/hdd/yangsc21/Python/My_3/deep-motion-editing/retargeting/datasets/valid_processed/Trinity/TestSeq003_root.npy",
+                    ref_path=config.ref_path,
+                    output_path=config.output_path,
+                    model_name=config.model_name,
+                    device=config.cuda_device)
+
+
+    elif config.mode == 'bvh2latent':
+        bvh2latent()
 
 
     # latent2bvh('Trinity',

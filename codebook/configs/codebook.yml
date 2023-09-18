@@ -42,8 +42,8 @@ VQVAE_2:
     vqvae_reverse_decoder_dilation: True
 
 # latent space
-train_data_path: "../retargeting/datasets/bvh2upper_lower_root/lmdb_latent_vel/lmdb_train"
-val_data_path: "../retargeting/datasets/bvh2upper_lower_root/lmdb_latent_vel/lmdb_test"
+train_data_path: "../retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/lmdb_latent_vel/lmdb_train"
+val_data_path: "../retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/lmdb_latent_vel/lmdb_test"
 
 n_poses: 30     # 30 -> 40 -> 240
 n_codes: 30
@@ -53,7 +53,7 @@ batch_size: 128
 loader_workers: 2
 epochs: 600     # 500 -> 10
 save_per_epochs: 60     # 20 -> 1
-model_save_path: "./result/train_codebook_bvh2upper_lower_root_again_512"
+model_save_path: "./result/my_codebook"
 name: "codebook"
 
 betas: [0.5, 0.999]

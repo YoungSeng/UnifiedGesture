@@ -24,10 +24,12 @@ def space2t(test_sentence):
     return res_str
 
 
-def downsample_process_root():
-    trinity_path = "/ceph/hdd/yangsc21/Python/My_3/trinity/test_motion/"
-    dst_path = "/ceph/hdd/yangsc21/Python/My_3/trinity/test_motion_downsample/"
+def downsample_process_root(trinity_path, dst_path):
+    if not os.path.exists(dst_path):
+        os.makedirs(dst_path)
     for item in os.listdir(trinity_path):
+        if not item.endswith('.bvh'):
+            continue
         bvh_file = os.path.join(trinity_path, item)
         motion = []
         with open(os.path.join(dst_path, item), 'w') as output:
@@ -135,11 +137,14 @@ def process_root():
                 # break
 
 
-def process_T_pose(divide=2):
-    # ZEGGS_path = "/ceph/hdd/yangsc21/Python/My_3/ZEGGS/clean/"
-    # dst_path = "/ceph/hdd/yangsc21/Python/My_3/ZEGGS_processed/"
-    ZEGGS_path = "/ceph/hdd/yangsc21/Python/My_3/IJCAI-20fps/"
-    dst_path = "/ceph/hdd/yangsc21/Python/My_3/IJCAI-20fps-fix/"
+def process_T_pose(ZEGGS_path, dst_path, divide=2):
+
+    # ZEGGS_path = "/ceph/hdd/yangsc21/Python/My_3/IJCAI-20fps/"
+    # dst_path = "/ceph/hdd/yangsc21/Python/My_3/IJCAI-20fps-fix/"
+
+    if not os.path.exists(dst_path):
+        os.makedirs(dst_path)
+
     if ZEGGS_path.split('/')[-2] == 'ZEGGS_GT':
         GT = True
     else:
@@ -304,10 +309,6 @@ if __name__ == '__main__':
     parser.add_argument('--ref_bvh', type=str, default="./Mixamo_new_2/ZEGGS/067_Speech_2_x_1_0.bvh")
     args = parser.parse_args()
 
-    # downsample_process_root()      # Trinity
-    # process_root()      # Talking_With_Hands
-    # process_T_pose(divide=1)        # ZEGGS
-
     if args.step == "IK":
 
         # bvh_path = "/ceph/hdd/yangsc21/Python/My_3/deep-motion-editing/result/inference/Trinity/Recording_006_minibatch_240_[0, 0, 1, 0, 0, 0, 0]_123456.bvh"
@@ -326,10 +327,19 @@ if __name__ == '__main__':
                 bvh_path = os.path.join(source_path, item)
                 PFC_fix(bvh_path, get_height(ref_bvh))
 
+    if args.step == "Trinity":
+        '''
+        python process_bvh.py --step Trinity --source_path "../../dataset/Trinity/test_motion/" --save_path "../../dataset/Trinity/test_motion_downsample/"
+        '''
+        downsample_process_root(args.source_path, args.save_path)      # Trinity
+        # process_root()      # Talking_With_Hands
+    if args.step == 'ZEGGS':
+        process_T_pose(args.source_path, args.save_path, divide=2)        # ZEGGS
+
+    if args.step == 'foot_contact':
+        process_foot_contact(source_path=args.source_path, save_path=args.save_path)
 
 
-    # process_foot_contact(source_path='./Mixamo_new_2/Trinity/', save_path='./Mixamo_new_2/Trinity_aux/')
-    # process_foot_contact(source_path=args.source_path, save_path=args.save_path)
 
 
 

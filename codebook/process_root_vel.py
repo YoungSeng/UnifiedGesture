@@ -18,8 +18,8 @@ if __name__ == '__main__':
     '''
     python process_root_vel.py
     '''
-    Trinity_path = '../retargeting/datasets/bvh2upper_lower_root/Trinity/'
-    ZEGGS_path = '../retargeting/datasets/bvh2upper_lower_root/ZEGGS/'
+    Trinity_path = '../retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/Trinity/'
+    ZEGGS_path = '../retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/ZEGGS/'
 
     extract_vel(Trinity_path)
     extract_vel(ZEGGS_path)

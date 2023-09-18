@@ -164,7 +164,8 @@ class BottleneckBlock(nn.Module):
             self.init_k(x)
 
         # Quantise and dequantise through bottleneck
-        x_l, fit = self.quantise(x)     # (960), 34.1081
+
+        x_l, fit, _ = self.quantise(x)     # (960), 34.1081
         x_d = self.dequantise(x_l)      # (960, 512)
 
         # Update embeddings

@@ -20,7 +20,7 @@ def process_code(source_path, save_path):
 
         print(upper.shape, lower.shape)
         latent_code = np.concatenate([upper, lower], axis=1)
-        latent_code = latent_code
+
         np.save(os.path.join(save_path, name), latent_code)
 
 
@@ -47,7 +47,7 @@ def process_motion(source_code_path, source_motion_path, source_aux_path, save_p
 
         all_body = np.concatenate([all_body_motion, clip_skeleton_vel, clip_skeleton_acc, aux], axis=1)
 
-        upper_code = np.load(os.path.join(source_code_path, name + '.npy'))
+        upper_code = np.load(os.path.join(source_code_path, 'code_upper_' + name + '.npy'))
         upper_code = upper_code[:, 0]      # (2694,)
 
         np.save(os.path.join(save_path, name + '_upper' + '.npy'), upper_code)
@@ -58,27 +58,22 @@ if __name__ == '__main__':
     '''
     python process_code.py
     '''
-    Trinity_VQVAE_path = './dataset/Trinity/VQVAE_result/Trinity/'
-    ZEGGS_VQVAE_path = './dataset/ZEGGS/VQVAE_result/ZEGGS/'
-
-    Trinity_save_code_path = './dataset/Trinity/latent_code_2/'
-    ZEGGS_save_code_path = './dataset/ZEGGS/latent_code_2/'
-
+    # Trinity_VQVAE_path = './retargeting/datasets/Trinity_ZEGGS/VQVAE_result/Trinity/'
+    # ZEGGS_VQVAE_path = './retargeting/datasets/Trinity_ZEGGS/VQVAE_result/ZEGGS/'
+    # Trinity_save_code_path = './retargeting/datasets/Trinity_ZEGGS/latent_code_2/Trinity/'
+    # ZEGGS_save_code_path = './retargeting/datasets/Trinity_ZEGGS/latent_code_2/ZEGGS/'
     # process_code(Trinity_VQVAE_path, Trinity_save_code_path)
     # process_code(ZEGGS_VQVAE_path, ZEGGS_save_code_path)
 
-    # Trinity_source_motion_path = './retargeting/datasets/bvh2upper_lower_root/Trinity/'
-    # ZEGGS_source_motion_path = './retargeting/datasets/bvh2upper_lower_root/ZEGGS/'
-    # Trinity_save_path = './dataset/Trinity/gesture/'
-    # ZEGGS_save_path = './dataset/ZEGGS/gesture/'
-    # process_motion(Trinity_save_code_path, Trinity_source_motion_path, Trinity_save_path)
-    # process_motion(ZEGGS_save_code_path, ZEGGS_source_motion_path, ZEGGS_save_path)
 
-    Trinity_source_motion_path = './retargeting/datasets/bvh2upper_lower_root/Trinity/'
-    ZEGGS_source_motion_path = './retargeting/datasets/bvh2upper_lower_root/ZEGGS/'
-    Trinity_source_aux_path = "./retargeting/datasets/Mixamo_new_2/Trinity_aux/"
-    ZEGGS_source_aux_path = "./retargeting/datasets/Mixamo_new_2/ZEGGS_aux/"
+
+    Trinity_save_code_path = './retargeting/datasets/Trinity_ZEGGS/VQVAE_result/Trinity/'
+    ZEGGS_save_code_path = './retargeting/datasets/Trinity_ZEGGS/VQVAE_result/ZEGGS/'
+    Trinity_source_motion_path = './retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/Trinity/'
+    ZEGGS_source_motion_path = './retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/ZEGGS/'
+    Trinity_source_aux_path = "./retargeting/datasets/Trinity_ZEGGS/Trinity_aux/"
+    ZEGGS_source_aux_path = "./retargeting/datasets/Trinity_ZEGGS/ZEGGS_aux/"
     Trinity_save_path = './dataset/Trinity/all_gesture_aux/'
-    ZEGGS_save_path = './dataset/ZEGGS/all_gesture_aux/'
+    ZEGGS_save_path = './dataset/datasets/ZEGGS/all_gesture_aux/'
     process_motion(Trinity_save_code_path, Trinity_source_motion_path, Trinity_source_aux_path, Trinity_save_path)
     process_motion(ZEGGS_save_code_path, ZEGGS_source_motion_path, ZEGGS_source_aux_path, ZEGGS_save_path)
