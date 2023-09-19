@@ -4,7 +4,7 @@ pip install tensorboard
 
 '''
 
-dataset_name = 'Trinity_ZEGGS'       # modify for re-train
+dataset_name = "Mixamo_new_2"       # modify to 'Trinity_ZEGGS' for re-training
 
 multiple = 1
 
