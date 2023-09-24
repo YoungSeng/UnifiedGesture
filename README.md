@@ -8,6 +8,8 @@
 
 ## 1. Getting started
 
+Code we tested on `NVIDIA GeForce RTX 2080 Ti` (CUDA Version: 12.2).
+
 ```gitignore
 conda create -n UnifiedGesture python==3.7
 conda activate UnifiedGesture
@@ -45,7 +47,7 @@ Put the pre-trained models and data:
 * Diffusion model
 * VQVAE
 * Retargeting network
-* Test data (Trinity, ZEGGS, mean file, std file, reference file etc.)
+* Test data (Trinity, ZEGGS)
 
 to according folders.
 
@@ -140,6 +142,8 @@ You will get latent result of the retargeting in the dataset `./datasets/Trinity
 
 ### 3.4 Training diffusion model
 
+Data preparation to generate `lmdb` files:
+
 ```gitignore
 python process_root_vel.py
 python ./datasets/latent_to_lmdb.py --base_path ./datasets/Trinity_ZEGGS/bvh2upper_lower_root
@@ -149,6 +153,11 @@ cd ..
 python process_code.py
 python ./make_lmdb.py --base_path ./dataset/
 ```
+
+You will get the `lmdb` files in the `./retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/lmdb_latent_vel/` folder and `./dataset/all_lmdb_aux/` folder.
+
+
+Training the diffusion model:
 
 ```gitignore
 cd ./diffusion_latent
@@ -160,10 +169,6 @@ The trained diffusion model will be saved in: `./result/my_diffusion/`
 ### 3.5 Refinement
 
 #### 3.5.1 Training VQVAE model
-
-
-
-You will get the lmdb file in the `./datasets/Trinity_ZEGGS/bvh2upper_lower_root/lmdb_latent_vel/` folder.
 
 ```gitignore
 cd ../codebook
