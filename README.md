@@ -1,6 +1,6 @@
 # UnifiedGesture: A Unified Gesture Synthesis Model for Multiple Skeletons
 
-### [Arxiv](https://arxiv.org/abs/2309.07051) | [Demo](https://youtu.be/Ix22-ZRqSss)
+### [Arxiv](https://arxiv.org/abs/2309.07051) | [Demo](https://youtu.be/Ix22-ZRqSss) | [Presentation Video](https://youtu.be/zoWv_SJQ14o)
 
 <div center>
 <img src="framework.png" width="550px">
@@ -33,6 +33,8 @@ pip install -r requirements.txt
 [//]: # (pycocotools)
 
 [//]: # (en-core-web-sm aubio)
+
+[//]: # (tensorboard-plugin-wit==1.8.1)
 
 ## 2. Quick start
 
@@ -111,15 +113,13 @@ python process_bvh.py --step Trinity --source_path "../../dataset/Trinity/" --sa
 python process_bvh.py --step ZEGGS --source_path "../../dataset/ZEGGS/clean/" --save_path "./Trinity_ZEGGS/ZEGGS/"
 python process_bvh.py --step foot_contact --source_path "./Trinity_ZEGGS/Trinity/" --save_path "./Trinity_ZEGGS/Trinity_aux/"
 python process_bvh.py --step foot_contact --source_path "./Trinity_ZEGGS/ZEGGS/" --save_path "./Trinity_ZEGGS/ZEGGS_aux/"
-cd ../../codebook
-python process_root_vel.py
-cd ..
+cd ../..
 python process_audio.py
 ```
 
 ### 3.2 Training retargeting network
 
-Change `dataset_name = Mixamo_new_2` in the `L7` of file `./retargeting/option_parser.py` to `dataset_name = 'Trinity_ZEGGS'`
+Change `dataset_name = 'Mixamo_new_2'` in the `L7` of file `./retargeting/option_parser.py` to `dataset_name = 'Trinity_ZEGGS'`
 
 ```gitignore
 cd ./retargeting/
@@ -141,7 +141,7 @@ You will get latent result of the retargeting in the dataset `./datasets/Trinity
 ### 3.4 Training diffusion model
 
 ```gitignore
-cd ../retargeting/
+python process_root_vel.py
 python ./datasets/latent_to_lmdb.py --base_path ./datasets/Trinity_ZEGGS/bvh2upper_lower_root
 cd ../codebook
 python VisualizeCodebook.py --config=./configs/codebook.yml --train --gpu 0

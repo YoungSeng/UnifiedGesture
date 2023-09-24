@@ -74,8 +74,11 @@ if __name__ == '__main__':
     try_mkdir(os.path.join(prefix, 'mean_var'))
 
     for character in characters:
+        if character.endswith('_aux'): continue
         data_path = os.path.join(prefix, character)
         files = sorted([f for f in os.listdir(data_path) if f.endswith(".bvh")])
         collect_bvh(prefix, character, files)
+        # import pdb
+        # pdb.set_trace()
         copy_std_bvh(prefix, character, files)
         write_statistics(character, './datasets/' + args.dataset + '/mean_var/')
