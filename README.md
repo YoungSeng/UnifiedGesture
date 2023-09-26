@@ -140,22 +140,37 @@ python demo.py --mode bvh2latent --save_dir ./my_model/
 You will get latent result of the retargeting in the dataset `./datasets/Trinity_ZEGGS/bvh2upper_lower_root/`.
 
 
-### 3.4 Training diffusion model
+### 3.3 Training VQVAE model
 
 Data preparation to generate `lmdb` files:
 
 ```gitignore
 python process_root_vel.py
 python ./datasets/latent_to_lmdb.py --base_path ./datasets/Trinity_ZEGGS/bvh2upper_lower_root
+```
+
+You will get the `lmdb` files in the `./retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/lmdb_latent_vel/` folder.
+
+```gitignore
 cd ../codebook
+python train.py --config=./configs/codebook.yml --train --gpu 0
+```
+
+The trained model is saved in: `./result/my_codebook/`, Then the code for the upper body is generated.
+
+```gitignore
 python VisualizeCodebook.py --config=./configs/codebook.yml --train --gpu 0
+```
+
+### 3.4 Training diffusion model
+
+```gitignore
 cd ..
 python process_code.py
 python ./make_lmdb.py --base_path ./dataset/
 ```
 
-You will get the `lmdb` files in the `./retargeting/datasets/Trinity_ZEGGS/bvh2upper_lower_root/lmdb_latent_vel/` folder and `./dataset/all_lmdb_aux/` folder.
-
+You will get the `lmdb` files in the `./dataset/all_lmdb_aux/` folder.
 
 Training the diffusion model:
 
@@ -166,18 +181,7 @@ python end2end.py --config=./configs/all_data.yml --gpu 1 --save_dir "./result/m
 
 The trained diffusion model will be saved in: `./result/my_diffusion/`
 
-### 3.5 Refinement
-
-#### 3.5.1 Training VQVAE model
-
-```gitignore
-cd ../codebook
-python train.py --config=./configs/codebook.yml --train --gpu 0
-```
-
-The trained model is saved in: `./result/my_codebook/`
-
-#### 3.5.2 RL training
+### 3.5 RL training
 
 TBA
 
