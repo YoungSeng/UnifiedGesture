@@ -1,6 +1,6 @@
 # UnifiedGesture: A Unified Gesture Synthesis Model for Multiple Skeletons
 
-### [Arxiv](https://arxiv.org/abs/2309.07051) | [Demo](https://youtu.be/Ix22-ZRqSss) | [Presentation Video](https://youtu.be/zoWv_SJQ14o) | [Teaser Video](https://youtu.be/-iRjCvol7VM) | [Poster](acmmm23_poster.pdf)
+### [Arxiv](https://arxiv.org/abs/2309.07051) | [Demo](https://youtu.be/Ix22-ZRqSss) | [Presentation Video](https://youtu.be/zoWv_SJQ14o) | [Teaser Video](https://youtu.be/-iRjCvol7VM) | [Poster](acmmm23_poster.pdf) | [Conference archive](https://dl.acm.org/doi/10.1145/3581783.3612503)
 
 <div center>
 <img src="framework.png" width="550px">
