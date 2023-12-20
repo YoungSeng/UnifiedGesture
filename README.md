@@ -16,6 +16,9 @@ conda activate UnifiedGesture
 pip install -r requirements.txt
 ```
 
+If you want to use in higher CUDA version (like `NVIDIA GeForce RTX 3080`), please change the `torch`, `torchvision`, `torchaudio` version in `requirements.txt` to `xxx+cu111`.
+Or simply use `Torch 1.13+` and the corresponding versions `torchvision` and `torchaudio`.
+
 [//]: # (netron==6.8.8)
 
 [//]: # (nvidia-cublas-cu11==11.10.3.66)

@@ -52,7 +52,8 @@ def copy_std_bvh(data_path, character, files):      # Standard
     """
     copy an arbitrary bvh file as a static information (skeleton's offset) reference
     """
-    cmd = 'cp \"{}\" ./datasets/{}/std_bvhs/{}.bvh'.format(data_path + character + '/' + files[0], args.dataset, character)
+    # pdb.set_trace()
+    cmd = 'cp \"{}\" ./datasets/{}/std_bvhs/{}.bvh'.format(data_path + character + '/' + files[0], args.dataset, character)     # 'Trinity_ZEGGS', 'bvh2upper_lower_root'
     os.system(cmd)
 
 

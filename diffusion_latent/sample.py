@@ -286,12 +286,7 @@ def inference_2(args, sample_fn, wavlm_model, vqvae_model, model, audionpy_path=
                                                    time=time,
                                                    return_seed=return_seed, w_grad=w_grad, save_result=save_result)      # style2onehot['Happy']
 
-    # x = np.load("./result/Trinity/Recording_006_minibatch_96_[0, 0, 0, 1, 0, 0, 0]_123456.npy")  # (1, 112, len)
     x_ = x[0].transpose(1, 0)[..., 16 * 2:-16 * 1]  # (len, 112)
-    # my_code = np.array([[101], [140], [140], [140], [140], [140], [368], [239], [239], [239], [ 16], [ 16], [ 16], [ 16], [ 16]])
-    # my_code = np.array([[480, 480, 140, 140, 140, 140, 368, 239, 239, 239, 16, 16, 16, 16, 16]])
-
-    # my_code = np.array([[480, 480, 480, 182, 272, 272, 272, 272, 272, 272, 272, 272, 16, 16, 16]])
 
     recon, code, distance = latent2code(vqvae_model, x_, None, None, w_grad, code=None)
     if w_grad:
@@ -425,7 +420,6 @@ if __name__ == '__main__':
     # model_path = './result/inference/new_DiffuseStyleGesture_model3_128/model001150000.pt'
     # model_path = "/ceph/home/wangzl21/Projects/My_3/deep-motion-editing/diffusion_latent/experiments/reinforce_diffusion_onlydiff_gradnorm0.1_lr1e-6_max0_seed0/ckpt/diffusion_epoch_1.pt"
     # model_path = '/ceph/home/wangzl21/Projects/My_3/deep-motion-editing/diffusion_latent/experiments/256_seed_4_aux_model001700000_reinforce_diffusion_onlydiff_gradnorm0.1_lr1e-6_max0_seed0/ckpt/diffusion_epoch_1.pt'
-
     # model_path = "/ceph/home/wangzl21/Projects/My_3/deep-motion-editing/diffusion_latent/experiments/256_seed_6_aux_model001700000_reinforce_diffusion_onlydiff_gradnorm0.1_lr1e-6_max0_seed0/ckpt/diffusion_epoch_1.pt"
     # model_path = "/ceph/home/wangzl21/Projects/My_3/deep-motion-editing/diffusion_latent/experiments/reinforce_diffusion_baseline_onlydiff_withoutreturnnorm_gradnorm0.2_lr1e-5_seed0/ckpt/diffusion_epoch_1.pt"
 
