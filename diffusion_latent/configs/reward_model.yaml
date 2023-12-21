@@ -1,0 +1,44 @@
+model:
+    hid_dim: 768
+    n_heads: 12
+    context_len: 18
+    n_action: 512
+    n_music: 1024
+    n_blocks: 1
+    attn_pdrop: 0.1
+    resid_pdrop: 0.1
+    norm_first: False
+    causal: False
+
+optimizer:
+    type: Adam
+    kwargs:
+        lr: 0.0005
+        weight_decay: 0.0025
+
+data:
+    train_dir: data/generated_noisy_data/drex_train_data.pkl
+    test_dir: data/generated_noisy_data/drex_valid_data.pkl
+    n_snippets_train: 2000000
+    n_snippets_test: 100000
+
+epoch: 10
+batch_size: 128
+seed: 0
+clip_grad_norm: 0.25
+loss_print_interval: 5
+save_per_epochs: 1
+test_freq: 1
+
+expname: reward_gpt_self_causal_transformer
+
+wandb:
+    entity: zerlinwang
+    project: UnifiedGesture
+    save_code: True
+    group: separate_reward_model
+    job_type: train
+    tags: ["reward_model"]
+    name: separate_reward_model_self_transformer_best_params
+    notes: "separate gpt reward model with repaired noisy data and self implemented transformer"
+    dir: experiments/reward_gpt_self_causal_transformer

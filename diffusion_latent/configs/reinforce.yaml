@@ -1,0 +1,50 @@
+buffer:
+    device: cuda
+    buffer_size: 100000
+    traj_len: 18
+    action_dim: 2
+    music_feat_dim: 1024
+    gamma: 1.
+
+environment:
+    reward_model:
+        hid_dim: 768
+        n_heads: 12
+        context_len: 18
+        n_action: 512
+        n_music: 1024
+        n_blocks: 1
+        attn_pdrop: 0.1
+        resid_pdrop: 0.1
+        norm_first: False
+        causal: False
+        sparse_reward: True
+        ckpt_path: experiments/reward_gpt_self_causal_transformer/ckpt/epoch_2.pt
+
+    data:
+        train_data_path: ../../dataset/all_lmdb_aux/lmdb_train/
+        test_data_path: ../../dataset/all_lmdb_aux/lmdb_test/
+        n_poses: 36
+        subdivision_stride: 3
+        motion_resampling_framerate: 7.5
+        train_batch_size: 256
+        test_batch_size: 256
+        train_shuffle: True
+        test_shuffle: False
+        loader_workers: 0
+
+policy:
+    train:
+        num_epochs: 1
+        traj_len: 18
+        gamma: 1.
+        max_grad_norm: 0.2
+        save_epoch_interval: 1
+    optimizer:
+        type: AdamW
+        kwargs:
+            lr: 0.00001
+
+seed: 0
+# expname: reinforce_diffusion_baseline_onlydiff_withoutreturnnorm_gradnorm0.2_lr1e-5
+expname: test

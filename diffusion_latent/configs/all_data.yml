@@ -43,3 +43,6 @@ betas: [0.5, 0.999]
 milestones: [100, 200]
 gamma: 0.1
 
+collect:
+    eps_list: [0.0, 0.25, 0.5, 0.75, 1.]
+    offline_data_path: ./data/generated_noisy_data

@@ -22,3 +22,5 @@ librosa==0.8.0
 torchaudio==0.9.0
 setuptools==59.5.0
 blobfile
+loguru
+wandb

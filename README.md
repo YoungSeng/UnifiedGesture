@@ -186,10 +186,18 @@ The trained diffusion model will be saved in: `./result/my_diffusion/`
 
 ### 3.5 RL training
 
-TBA
+```gitignore
+# collect demonstrations
+python data_loader/lmdb_data_loader.py --config=./configs/all_data.yml --gpu 0
+# train reward model
+python reward_model_policy.py
+# RL training
+python reinforce.py --config=./configs/all_data.yml --gpu 0
+```
 
 ### More
 * If the `data.mbd` file is too small (8KB), check for issues generating the lmdb file.
+* If you meet `urllib3` problem, see this [issue](https://github.com/YoungSeng/UnifiedGesture/issues/7).
 * You can modify the code yourself to use [BEAT](https://github.com/PantoMatrix/BEAT), [TWH](https://github.com/facebookresearch/TalkingWithHands32M), etc. This will not be demonstrated here.
 
 ### Acknowledgments
@@ -206,12 +214,22 @@ for making their code publicly available, which helped significantly in this wor
 
 If you find this work useful, please cite the paper with the following bibtex:
 ```
-@inproceedings{yang2023UnifiedGesture,
-  title={UnifiedGesture: A Unified Gesture Synthesis Model for Multiple Skeletons},
-  author={Sicheng Yang, Zilin Wang, Zhiyong Wu, Minglei Li, Zhensong Zhang, Qiaochu Huang, Lei Hao, Songcen Xu, Xiaofei Wu, changpeng yang, Zonghong Dai},
-  booktitle={Proceedings of the 31st ACM International Conference on Multimedia},
-  year={2023},
-  doi={https://doi.org/10.1145/3581783.3612503}
+@inproceedings{10.1145/3581783.3612503,
+author = {Yang, Sicheng and Wang, Zilin and Wu, Zhiyong and Li, Minglei and Zhang, Zhensong and Huang, Qiaochu and Hao, Lei and Xu, Songcen and Wu, Xiaofei and Yang, Changpeng and Dai, Zonghong},
+title = {UnifiedGesture: A Unified Gesture Synthesis Model for Multiple Skeletons},
+year = {2023},
+isbn = {9798400701085},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3581783.3612503},
+doi = {10.1145/3581783.3612503},
+abstract = {The automatic co-speech gesture generation draws much attention in computer animation. Previous works designed network structures on individual datasets, which resulted in a lack of data volume and generalizability across different motion capture standards. In addition, it is a challenging task due to the weak correlation between speech and gestures. To address these problems, we present UnifiedGesture, a novel diffusion model-based speech-driven gesture synthesis approach, trained on multiple gesture datasets with different skeletons. Specifically, we first present a retargeting network to learn latent homeomorphic graphs for different motion capture standards, unifying the representations of various gestures while extending the dataset. We then capture the correlation between speech and gestures based on a diffusion model architecture using cross-local attention and self-attention to generate better speech-matched and realistic gestures. To further align speech and gesture and increase diversity, we incorporate reinforcement learning on the discrete gesture units with a learned reward function. Extensive experiments show that UnifiedGesture outperforms recent approaches on speech-driven gesture generation in terms of CCA, FGD, and human-likeness.},
+booktitle = {Proceedings of the 31st ACM International Conference on Multimedia},
+pages = {1033–1044},
+numpages = {12},
+keywords = {neural motion processing, data-driven animation, gesture generation},
+location = {<conf-loc>, <city>Ottawa ON</city>, <country>Canada</country>, </conf-loc>},
+series = {MM '23}
 }
 ```
 
