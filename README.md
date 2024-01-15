@@ -6,6 +6,10 @@
 <img src="framework.png" width="550px">
 </div>
 
+## Further work
+
+📢[FreeTalker](https://github.com/YoungSeng/FreeTalker) - Generate both speech-driven and text-driven speaker.
+
 ## 1. Getting started
 
 Code we tested on `NVIDIA GeForce RTX 2080 Ti` (CUDA Version: 12.2).
